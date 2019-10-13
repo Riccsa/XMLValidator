@@ -1,6 +1,0 @@
-2019-10-13T10:35:39.531,XMLDocumentInvalid1.xml,érvénytelen, hiba: cvc-minInclusive-valid: Value '1899' is not facet-valid with respect to minInclusive '1900' for type '#AnonType_evszamDokumentum'.
-2019-10-13T10:35:39.546,XMLDocumentInvalid2.xml,érvénytelen, hiba: cvc-enumeration-valid: Value 'Tipus4' is not facet-valid with respect to enumeration '[Tipus1, Tipus2, Tipus3]'. It must be a value from the enumeration.
-2019-10-13T10:35:39.547,XMLDocumentInvalid3.xml,érvénytelen, hiba: cvc-enumeration-valid: Value '4' is not facet-valid with respect to enumeration '[1, 2, 3]'. It must be a value from the enumeration.
-2019-10-13T10:35:39.549,XMLDocumentValid1.xml,  érvényes
-2019-10-13T10:35:39.55,XMLDocumentValid2.xml,  érvényes
-2019-10-13T10:35:39.552,XMLDocumentValid3.xml,  érvényes

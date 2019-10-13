@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,7 +23,6 @@ import javax.xml.validation.Validator;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-
 public class XMLValidator {
 
     private Source schemaFile;
@@ -34,10 +31,8 @@ public class XMLValidator {
     private Validator validator;
     private XMLRepository XMLRepo;
     private List<String> resultList;
-    private File resultFile;
 
     public XMLValidator(String path) {
-
         try {
             parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             schemaFile = new StreamSource(new File(path));
@@ -46,63 +41,41 @@ public class XMLValidator {
             validator = schema.newValidator();
             resultList = new ArrayList<>();
         } catch (ParserConfigurationException ex) {
-            System.out.println("Parser hiba");
+            System.err.println("Parser hiba");
+            System.exit(0);
         } catch (SAXException ex) {
-            System.out.println("A megadott sémafájl érvénytelen");
+            System.err.println("A megadott sémafájl nem található");
+            System.exit(0);
         }
-
     }
 
     public void validate(XMLRepository XMLRepo) {
-
         for (File file : XMLRepo.getFiles()) {
-
             String result = check(file);
             resultList.add(result);
         }
-
         export();
-
     }
 
     private String check(File file) {
-        
-        String date;
-        String fileName;
-        String result;
-
-
+        String fileName = file.getName();
+        String message = "";
         try {
             Document document = parser.parse(file);
             validator.validate(new DOMSource(document));
-            
-            date=LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
-            fileName=file.getName();
-            result="érvényes";
-            
-            return String.format("%5s,%-20s,%10s",date,fileName,result);
-
-            //return LocalDateTime.now().toString() + "\t" + file.getName() + "   " + "érvényes;";
-
+            message = "érvényes";
         } catch (SAXException ex) {
-            
-            date=LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
-            fileName=file.getName();
-            result="érvénytelen, hiba: "+ex.getMessage();
-                    
-           return String.format("%10s,%-20s,%10s",date,fileName,result);
-            //return LocalDateTime.now().toString() + "\t" + file.getName() + "   " + "érvénytelen, hiba: " + ex.getMessage();
+            message = "érvénytelen, hiba: " + ex.getMessage();
         } catch (IOException ex) {
-            System.out.println("A megadott fájl nem található");
+            System.err.println("A megadott fájl nem található");
+        } finally {
+            return String.format("%s,   %10s", fileName, message);
         }
-
-        return "Ellenőrzési hiba";
-
     }
 
-    public void export() {
-
-        File file = new File("result.txt");
+    private void export() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+        File file = new File(LocalDateTime.now().format(dtf) + ".txt");
         try {
             BufferedWriter bw = new BufferedWriter(new PrintWriter(file));
             for (String result : resultList) {
@@ -111,11 +84,9 @@ public class XMLValidator {
             }
             bw.close();
         } catch (FileNotFoundException ex) {
-            System.out.print("A fájl nem található");
+            System.err.print("A fájl nem található");
         } catch (IOException ex) {
-            System.out.println("Hiba a fájl írása közben");
+            System.err.println("Hiba a fájl írása közben");
         }
-
     }
-
 }
