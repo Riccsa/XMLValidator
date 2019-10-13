@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<Dokumentum>
+    <cim>Cim1</cim>
+    <szam>tizenhet</szam>
+    <evszam>1901</evszam>
+    <sorszam>12.</sorszam>
+    <tipus>Tipus3</tipus>
+    <kibocsatoKod>3</kibocsatoKod>
+    <kibocsatoDatum>1991.01.01.</kibocsatoDatum>
+    <tartalom>
+        <szakasz> Ez az első bekezdése a dokumentumnak ez pedig a következő sor
+        ez pedig a következő sora</szakasz>
+         <szakasz> Ez a második bekezdése a dokumentumnak ez pedig a következő sor
+        ez pedig a következő sora</szakasz>
+         <szakasz> Ez a második bekezdése a dokumentumnak ez pedig a következő sor
+        ez pedig a következő sora</szakasz>
+    </tartalom>
+
+</Dokumentum>
